@@ -1,0 +1,58 @@
+name: Instalador
+
+# Roda os testes a cada envio. Gera o instalador .exe a cada envio na main e ao criar uma versão (tag v*).
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m unittest discover -s tests -v
+
+  instalador:
+    needs: testes
+    if: github.event_name != 'pull_request'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Versão
+        id: versao
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then V="${GITHUB_REF_NAME#v}"; else V="$(python -c 'import gelae; print(gelae.VERSAO)')-${GITHUB_SHA::7}"; fi
+          echo "v=$V" >> "$GITHUB_OUTPUT"
+      - name: Empacotar o programa
+        run: |
+          python -m pip install --upgrade pip pyinstaller
+          pyinstaller --noconfirm --clean --windowed --name Gelae --icon build/gelae.ico --add-data "web;web" main.py
+      - name: Montar o instalador
+        shell: pwsh
+        run: |
+          if (-not (Get-Command iscc -ErrorAction SilentlyContinue)) { choco install innosetup -y --no-progress }
+          $iscc = (Get-Command iscc -ErrorAction SilentlyContinue).Source
+          if (-not $iscc) { $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" }
+          & $iscc "/DVersao=${{ steps.versao.outputs.v }}" build\gelae.iss
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Instalar-Gelae-${{ steps.versao.outputs.v }}
+          path: dist/Instalar-Gelae-*.exe
+      - name: Publicar versão
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/Instalar-Gelae-*.exe

@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+/build/*
+!/build/gelae.iss
+!/build/gelae.ico
+!/build/gera_icone.py
+/dist/
+*.spec
+*.db
+*.db-wal
+*.db-shm
+*.log

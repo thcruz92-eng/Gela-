@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gelaê</title>
+<link rel="icon" href="/icone.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="menu">
+    <div class="marca">
+      <img src="/icone.svg" alt="" width="36" height="36">
+      <div><b>Gelaê</b><small>Cidade Alta</small></div>
+    </div>
+    <nav id="nav"></nav>
+    <a class="caixa-status" id="caixaStatus" href="#/caixa"></a>
+  </aside>
+  <main id="conteudo" tabindex="-1"></main>
+</div>
+
+<div id="modal" class="modal-fundo" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+    <header><h2 id="modalTitulo"></h2><button class="x" type="button" aria-label="Fechar" data-fechar>×</button></header>
+    <div id="modalCorpo"></div>
+  </div>
+</div>
+<div id="avisos" aria-live="polite"></div>
+<iframe id="impressao" title="impressão" tabindex="-1"></iframe>
+<script src="/app.js"></script>
+</body>
+</html>
