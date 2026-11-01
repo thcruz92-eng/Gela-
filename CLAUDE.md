@@ -57,4 +57,12 @@ Referência funcional: o "Manual do Gelaê" (app anterior, cujo código se perde
 - Fiado: contas a receber e baixa quando o cliente paga.
 - Acesso pela rede Wi-Fi (garçom no celular lançando na comanda), com senha.
 - Integrações: WhatsApp, iFood (API oficial, exige homologação), Zé Delivery (a confirmar).
-- Pendências do Thiago: modelo da impressora do depósito e versão do Windows do computador.
+- Pendência do Thiago: versão do Windows do computador do depósito.
+
+## Impressora do depósito
+**Bematech MP-4200 TH** (térmica, papel 80 mm, área útil 72 mm, guilhotina), foto de 01/11/2026. Hoje a impressão é
+um HTML de 72 mm enviado pelo driver do Windows (`--kiosk-printing` manda direto para a impressora padrão).
+A confirmar no computador dele: driver instalado, papel em modo bobina e corte no fim do documento. Se sobrar papel em
+branco ou o corte falhar, a saída é imprimir direto em RAW pelo spooler (`ctypes` + `winspool.drv`, sem pip). Antes,
+confirmar se a impressora está no modo ESC/POS ou ESC/Bema, porque o comando de corte muda: ESC/POS usa `GS V`,
+ESC/Bema usa `ESC w` (corte total) e `ESC m` (corte parcial).
