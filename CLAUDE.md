@@ -57,7 +57,22 @@ Referência funcional: o "Manual do Gelaê" (app anterior, cujo código se perde
 - Fiado: contas a receber e baixa quando o cliente paga.
 - Acesso pela rede Wi-Fi (garçom no celular lançando na comanda), com senha.
 - Integrações: WhatsApp, iFood (API oficial, exige homologação), Zé Delivery (a confirmar).
-- Pendência do Thiago: versão do Windows do computador do depósito.
+## Integrações: o que se sabe (pesquisa de 01/11/2026)
+- **iFood**: API oficial e gratuita (developer.ifood.com.br). Exige conta de desenvolvedor com CNPJ (CPF não serve).
+  Uma página antiga do portal também cita CNAE de tecnologia (a confirmar). O e-mail tem de ser diferente do usado no
+  Portal do Parceiro. O portal dá uma loja de teste. O app precisa passar na homologação: receber, aceitar ou recusar
+  e acompanhar o status dos pedidos. Depois disso, o Dono da loja autoriza o app no Portal do Parceiro. Para um
+  programa instalado no computador da loja, o modelo é o "aplicativo distribuído": autorização por código e consulta
+  periódica de novos pedidos (polling), sem webhook. Ver se a loja está cadastrada como Restaurante ou como Mercado,
+  porque o fluxo muda.
+- **Zé Delivery**: não tem API pública. Só integra por fornecedores de PDV com contrato (Linx, webPosto, PDV Manager),
+  que usam o Merchant ID tirado do portal do Zé. Para o Gelaê, o caminho é o dono pedir acesso de integração ao
+  consultor do Zé (a confirmar). Até lá, os pedidos do Zé continuam no app do Zé.
+
+## Computador do depósito (fotos de 01/11/2026)
+Dell com Windows 10 Home 22H2 (build 19045), **64 bits**, Intel i5-3330, **4 GB de RAM**, HD mecânico de 500 GB.
+Máquina modesta: manter o sistema leve (nada de Electron, nada de pacote pesado), empacotar em pasta (PyInstaller
+`--onedir`, abre mais rápido que `--onefile` em HD). Chrome e Edge instalados.
 
 ## Impressora do depósito
 **Bematech MP-4200 TH** (térmica, papel 80 mm, área útil 72 mm, guilhotina), foto de 01/11/2026. Hoje a impressão é
